@@ -37,8 +37,27 @@ async function addExpense(expenseData) {
     return newExpense;
 }
 
+async function calculateTotalExpenses(category) {
+    const expenses = await getExpenses();
+
+    const filteredExpenses = category
+        ? expenses.filter(
+              expense =>
+                  expense.category.toLowerCase() === category.toLowerCase()
+          )
+        : expenses;
+
+    const total = filteredExpenses.reduce(
+        (sum, expense) => sum + expense.amount,
+        0
+    );
+
+    return total;
+}
+
 module.exports = {
     getExpenses,
     saveExpenses,
     addExpense,
+    calculateTotalExpenses
 };
