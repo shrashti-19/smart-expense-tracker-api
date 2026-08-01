@@ -66,9 +66,35 @@ const calculateTotalExpenses = async (req, res) => {
         });
     }
 };
+const deleteExpense = async (req, res) => {
+    try {
+        const deletedExpense = await expenseService.deleteExpense(req.params.id);
+
+        if (!deletedExpense) {
+            return res.status(404).json({
+                success: false,
+                message: "Expense not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Expense deleted successfully",
+            data: deletedExpense,
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to delete expense",
+        });
+    }
+};
 
 module.exports = {
     addExpense,
     getAllExpenses,
-    calculateTotalExpenses
+    calculateTotalExpenses,
+    deleteExpense
 };

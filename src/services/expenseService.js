@@ -55,9 +55,30 @@ async function calculateTotalExpenses(category) {
     return total;
 }
 
+async function deleteExpense(id) {
+    const expenses = await getExpenses();
+
+    const expenseIndex = expenses.findIndex(
+        expense => expense.id === id
+    );
+
+    if (expenseIndex === -1) {
+        return null;
+    }
+
+    const deletedExpense = expenses[expenseIndex];
+
+    expenses.splice(expenseIndex, 1);
+
+    await saveExpenses(expenses);
+
+    return deletedExpense;
+}
+
 module.exports = {
     getExpenses,
     saveExpenses,
     addExpense,
-    calculateTotalExpenses
+    calculateTotalExpenses,
+    deleteExpense
 };
