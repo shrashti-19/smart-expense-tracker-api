@@ -10,7 +10,7 @@ async function getExpenses() {
     return JSON.parse(data);
 }
 
-// Save expenses to file
+// Save expenses
 async function saveExpenses(expenses) {
     await fs.writeFile(
         filePath,
@@ -27,7 +27,7 @@ async function addExpense(expenseData) {
         title: expenseData.title,
         amount: expenseData.amount,
         category: expenseData.category,
-        date: expenseData.date
+        date: expenseData.date,
     };
 
     expenses.push(newExpense);
@@ -37,14 +37,8 @@ async function addExpense(expenseData) {
     return newExpense;
 }
 
-// Get all expenses
-async function getAllExpenses() {
-    return await getExpenses();
-}
-
 module.exports = {
     getExpenses,
     saveExpenses,
     addExpense,
-    getAllExpenses
 };
