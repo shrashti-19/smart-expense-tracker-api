@@ -1,6 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
-const { v4: uuidv4 } = require("uuid");
+const { randomUUID } = require("crypto");
 
 const filePath = path.join(__dirname, "../data/expenses.json");
 
@@ -23,7 +23,7 @@ async function addExpense(expenseData) {
     const expenses = await getExpenses();
 
     const newExpense = {
-        id: uuidv4(),
+        id: randomUUID(),
         title: expenseData.title,
         amount: expenseData.amount,
         category: expenseData.category,
@@ -37,8 +37,14 @@ async function addExpense(expenseData) {
     return newExpense;
 }
 
+// Get all expenses
+async function getAllExpenses() {
+    return await getExpenses();
+}
+
 module.exports = {
     getExpenses,
     saveExpenses,
-    addExpense
+    addExpense,
+    getAllExpenses
 };

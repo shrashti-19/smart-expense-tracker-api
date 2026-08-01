@@ -1,11 +1,10 @@
 const express = require("express");
-
 const router = express.Router();
 
-const {
-    addExpense
-} = require("../controllers/expenseController");
+const { addExpense, getAllExpenses } = require("../controllers/expenseController");
+const validateExpense = require("../middleware/validateExpense");
 
-router.post("/expenses", addExpense);
+router.get("/expenses", getAllExpenses);
+router.post("/expenses", validateExpense, addExpense);
 
 module.exports = router;
